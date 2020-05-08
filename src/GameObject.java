@@ -8,15 +8,18 @@ public abstract class GameObject {
 
     protected ID id;
 
-    public GameObject(int x, int y, ID id){
+    public GameObject(int x, int y, ID id) {
         this.x = x;
         this.y = y;
         this.id = id;
     }
+
     // Tick constructor
     public abstract void tick();
+
     //render
     public abstract void render(Graphics g);
+
     public abstract Rectangle getBounds();
 
     //Getters and setters
