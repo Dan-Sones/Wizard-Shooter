@@ -5,10 +5,16 @@ public class Game extends Canvas implements Runnable{
 
     private Boolean isRunning = false;
     private Thread thread;
+    private Handler handler;
 
     public Game(){
         new Window(1000, 563, "Wizard Shooter", this);
         start();
+
+        handler = new Handler();
+
+        handler.addObject(new Box(100, 100));
+        handler.addObject(new Box(200, 100));
 
     }
 
@@ -75,6 +81,7 @@ public class Game extends Canvas implements Runnable{
         g.setColor(Color.red);
         g.fillRect(0, 0, 1000, 563);
 
+        handler.render(g); //MUST BE AT THE BOTTOM!!!!!
         ////////////////////////////////////////
         g.dispose();
         bs.show();
@@ -82,6 +89,7 @@ public class Game extends Canvas implements Runnable{
     }// render
 
     private void tick() {
+        handler.tick();
     }
 
 
