@@ -1,4 +1,7 @@
-package PACKAGE_NAME;
-
 public enum ID {
+    Player(),
+    Block(),
+    Crate(),
+    Bullet(),
+    Enemy(),
 }

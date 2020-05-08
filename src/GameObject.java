@@ -5,9 +5,13 @@ public abstract class GameObject {
     protected int x, y;
     protected float velX = 0, velY = 0;
 
-    public GameObject(int x, int y){
+
+    protected ID id;
+
+    public GameObject(int x, int y, ID id){
         this.x = x;
         this.y = y;
+        this.id = id;
     }
     // Tick constructor
     public abstract void tick();
@@ -46,5 +50,13 @@ public abstract class GameObject {
 
     public void setX(int x) {
         this.x = x;
+    }
+
+    public ID getId() {
+        return id;
+    }
+
+    public void setId(ID id) {
+        this.id = id;
     }
 }
