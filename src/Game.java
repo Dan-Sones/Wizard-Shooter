@@ -7,9 +7,14 @@ public class Game extends Canvas implements Runnable {
     private Boolean isRunning = false;
     private Thread thread;
     private Handler handler;
+    private Camera camera;
+    private SpriteSheet ss;
+
     private BufferedImage sprite_sheet = null;
     private BufferedImage level = null;
-    private Camera camera;
+    private BufferedImage floor = null;
+
+
 
     //Amount of ammo
     public int ammo = 100;
@@ -21,9 +26,14 @@ public class Game extends Canvas implements Runnable {
         handler = new Handler();
         camera = new Camera(0, 0);
         this.addKeyListener(new KeyInput(handler));
-        this.addMouseListener(new MouseInput(handler, camera, this));
+
         BufferedImageLoader loader = new BufferedImageLoader();
         level = loader.loadImage("map.png");
+
+        sprite_sheet = loader.loadImage("/sprite_sheet.png");
+        ss = new SpriteSheet(sprite_sheet);
+        floor = ss.grabImage(4, 2, 32, 32);
+        this.addMouseListener(new MouseInput(handler, camera, this, ss));
         loadLevel(level);
 
 
@@ -90,9 +100,14 @@ public class Game extends Canvas implements Runnable {
         Graphics2D g2d = (Graphics2D) g;
         ////////////////////////////////////////
         // Anything between these comments is shown to the screen
-        g.setColor(Color.red);
-        g.fillRect(0, 0, 1000, 563);
+
         g2d.translate(-camera.getX(), -camera.getY());
+
+        for(int xx = 0; xx < 30 *72; xx+=32){
+            for(int yy = 0; yy < 30 * 72; yy+=32){
+                g.drawImage(floor, xx, yy, null);
+            }
+        }
 
 
 
@@ -118,20 +133,20 @@ public class Game extends Canvas implements Runnable {
 
                 if(red == 255){
                     //If a pixel is red then it's a wall
-                    handler.addObject(new Block(xx*32, yy*32, ID.Block)); //Create a new "wall"
+                    handler.addObject(new Block(xx*32, yy*32, ID.Block, ss)); //Create a new "wall"
                 }
                 if(blue == 255 && green == 0){
                     // If a pixel is blue it's a player
-                    handler.addObject(new Wizard(xx*32, yy*32, ID.Player, handler, this));//Create a new player
+                    handler.addObject(new Wizard(xx*32, yy*32, ID.Player, handler, this,ss));//Create a new player
                 }
 
                 if(green == 255 && blue == 0) {
                     // If it's green it's an enemy
-                    handler.addObject(new Enemy(xx * 32, yy * 32, ID.Enemy, handler));//Create a new Enemy NPC
+                    handler.addObject(new Enemy(xx * 32, yy * 32, ID.Enemy, handler, ss));//Create a new Enemy NPC
                 }
 
                 if(green == 255 && blue == 255){
-                    handler.addObject(new crate(xx*32, yy * 32, ID.Crate));
+                    handler.addObject(new crate(xx*32, yy * 32, ID.Crate, ss));
                 }
             }
 

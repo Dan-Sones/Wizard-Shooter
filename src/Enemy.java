@@ -1,16 +1,20 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 public class Enemy extends GameObject {
 
+    private BufferedImage enemy_image;
     private Handler handler;
     Random r = new Random();
     int choose = 0;
     int hp = 100;
 
-    public Enemy(int x, int y, ID id, Handler handler) {
-        super(x, y, id);
+    public Enemy(int x, int y, ID id, Handler handler, SpriteSheet ss) {
+        super(x, y, id, ss);
         this.handler = handler;
+
+        enemy_image = ss.grabImage(4, 1 , 32, 32);
     }
 
     @Override
@@ -54,9 +58,7 @@ public class Enemy extends GameObject {
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.yellow);
-        g.fillRect(x, y, 32, 32);
-
+        g.drawImage(enemy_image, x, y , null);
         Graphics2D g2d = (Graphics2D) g;
         g.setColor(Color.green);
         //Uncomment the line below to see boundaries of the enemies
