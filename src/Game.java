@@ -11,6 +11,9 @@ public class Game extends Canvas implements Runnable {
     private BufferedImage level = null;
     private Camera camera;
 
+    //Amount of ammo
+    public int ammo = 100;
+
     public Game() {
         new Window(1000, 563, "Wizard Shooter", this);
         start();
@@ -18,7 +21,7 @@ public class Game extends Canvas implements Runnable {
         handler = new Handler();
         camera = new Camera(0, 0);
         this.addKeyListener(new KeyInput(handler));
-        this.addMouseListener(new MouseInput(handler, camera));
+        this.addMouseListener(new MouseInput(handler, camera, this));
         BufferedImageLoader loader = new BufferedImageLoader();
         level = loader.loadImage("map.png");
         loadLevel(level);
@@ -40,7 +43,7 @@ public class Game extends Canvas implements Runnable {
             e.printStackTrace();
         }
     }//Stop end
-
+    //--------------------Main Method--------------------
     public static void main(String[] args) {
         new Game();
     }
@@ -114,12 +117,24 @@ public class Game extends Canvas implements Runnable {
                 int blue = (pixel) & 0xff;
 
                 if(red == 255){
-                    handler.addObject(new Block(xx*32, yy*32, ID.Block));
+                    //If a pixel is red then it's a wall
+                    handler.addObject(new Block(xx*32, yy*32, ID.Block)); //Create a new "wall"
                 }
-                if(blue == 255){
-                    handler.addObject(new Wizard(xx*32, yy*32, ID.Player, handler));
+                if(blue == 255 && green == 0){
+                    // If a pixel is blue it's a player
+                    handler.addObject(new Wizard(xx*32, yy*32, ID.Player, handler, this));//Create a new player
+                }
+
+                if(green == 255 && blue == 0) {
+                    // If it's green it's an enemy
+                    handler.addObject(new Enemy(xx * 32, yy * 32, ID.Enemy, handler));//Create a new Enemy NPC
+                }
+
+                if(green == 255 && blue == 255){
+                    handler.addObject(new crate(xx*32, yy * 32, ID.Crate));
                 }
             }
+
         }
     }
 
