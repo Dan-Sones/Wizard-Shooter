@@ -1,11 +1,17 @@
 <h1>Wizard Shooter</h1>
 
-
+<img src= 'https://s6.gifyu.com/images/Gameplay.gif'>
 
 <h2>About</h2>
 <ul>
     <li>Project Started on 8th May 2020</li>
-    <li>More details added soon</li>
+    <li>Project Finished 10th May 2020</li>
+    <li>Made following Lessons on Youtube</li>
+    <li>Made in pure java</li>
+    <li>Map layout made in <a href="https://www.getpaint.net/download.html"> Paint.net</a> </li>
+    <li>Uses <strong>CPU Graphics</strong> Rather then GPU Graphics</li>
+    <li>Features alot of dirty code but let me off.. It's my first time...</li>
+ 
     
 </ul>
 
@@ -23,5 +29,10 @@
         <img src='https://i.postimg.cc/rF64h6Wq/Add-Textures.png'>
          <hr>
      </li>
-     
+     <li><strong>10th May 2020 - Animations, HP, HUD</strong>
+     <p>Today I have Finished the Game! Animated Sprites and very basic HUD was Were my main priorities and they work Just as planned!
+     I've also Added a <a href="https://github.com/Dan-Sones/Wizard-Shooter/blob/master/Wizard%20Shoooter%20Release.jar">Jar File</a> and a <a href="https://github.com/Dan-Sones/Wizard-Shooter/blob/master/WizardShooter.exe"> .exe </a> So you can play if you wish to :)
+     </p>
+     </li>
+       
 </ul>
