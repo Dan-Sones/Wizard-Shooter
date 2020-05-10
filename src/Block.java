@@ -19,11 +19,11 @@ public class Block extends GameObject {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(block_image, x, y , null);
+        g.drawImage(block_image, x, y, null);
     }
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x , y, 32 ,32);
+        return new Rectangle(x, y, 32, 32);
     }
 }

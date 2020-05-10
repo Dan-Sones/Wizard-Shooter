@@ -15,9 +15,10 @@ public class Game extends Canvas implements Runnable {
     private BufferedImage floor = null;
 
 
-
     //Amount of ammo
     public int ammo = 100;
+    //Health
+    public int hp = 100;
 
     public Game() {
         new Window(1000, 563, "Wizard Shooter", this);
@@ -53,6 +54,7 @@ public class Game extends Canvas implements Runnable {
             e.printStackTrace();
         }
     }//Stop end
+
     //--------------------Main Method--------------------
     public static void main(String[] args) {
         new Game();
@@ -103,16 +105,37 @@ public class Game extends Canvas implements Runnable {
 
         g2d.translate(-camera.getX(), -camera.getY());
 
-        for(int xx = 0; xx < 30 *72; xx+=32){
-            for(int yy = 0; yy < 30 * 72; yy+=32){
+        for (int xx = 0; xx < 30 * 72; xx += 32) {
+            for (int yy = 0; yy < 30 * 72; yy += 32) {
                 g.drawImage(floor, xx, yy, null);
             }
         }
 
 
-
         handler.render(g);
         g2d.translate(camera.getX(), camera.getY());
+        //HP BAR
+        //Bar Background
+        g.setColor(Color.gray);
+        g.fillRect(5, 5, 200, 32);
+        //Current HP
+        g.setColor(Color.green);
+        g.fillRect(5, 5, hp * 2, 32);
+        //Outline
+        g.setColor(Color.black);
+        g.drawRect(5, 5, 200, 32);
+        //Ammo
+        g.setColor(Color.white);
+        g.drawString("Ammo :" + ammo, 5, 50);
+
+
+        //Death Check
+        if (hp <= 0) {
+            g.setColor(Color.white);
+            g.drawString("Oh dear, you are dead!", 400, 281);
+        }
+
+
         ////////////////////////////////////////
         g.dispose();
         bs.show();
@@ -120,33 +143,33 @@ public class Game extends Canvas implements Runnable {
     }// render
 
     //loading the level
-    private void loadLevel (BufferedImage image){
+    private void loadLevel(BufferedImage image) {
         int w = image.getWidth();
         int h = image.getHeight();
 
-        for (int xx = 0; xx < w; xx++){
-            for(int yy = 0; yy < h; yy++ ){
+        for (int xx = 0; xx < w; xx++) {
+            for (int yy = 0; yy < h; yy++) {
                 int pixel = image.getRGB(xx, yy);
                 int red = (pixel >> 16) & 0xff;
                 int green = (pixel >> 8) & 0xff;
                 int blue = (pixel) & 0xff;
 
-                if(red == 255){
+                if (red == 255) {
                     //If a pixel is red then it's a wall
-                    handler.addObject(new Block(xx*32, yy*32, ID.Block, ss)); //Create a new "wall"
+                    handler.addObject(new Block(xx * 32, yy * 32, ID.Block, ss)); //Create a new "wall"
                 }
-                if(blue == 255 && green == 0){
+                if (blue == 255 && green == 0) {
                     // If a pixel is blue it's a player
-                    handler.addObject(new Wizard(xx*32, yy*32, ID.Player, handler, this,ss));//Create a new player
+                    handler.addObject(new Wizard(xx * 32, yy * 32, ID.Player, handler, this, ss));//Create a new player
                 }
 
-                if(green == 255 && blue == 0) {
+                if (green == 255 && blue == 0) {
                     // If it's green it's an enemy
                     handler.addObject(new Enemy(xx * 32, yy * 32, ID.Enemy, handler, ss));//Create a new Enemy NPC
                 }
 
-                if(green == 255 && blue == 255){
-                    handler.addObject(new crate(xx*32, yy * 32, ID.Crate, ss));
+                if (green == 255 && blue == 255) {
+                    handler.addObject(new crate(xx * 32, yy * 32, ID.Crate, ss));
                 }
             }
 
@@ -154,8 +177,8 @@ public class Game extends Canvas implements Runnable {
     }
 
     private void tick() {
-        for(int i = 0; i < handler.object.size(); i++){
-            if(handler.object.get(i).getId() == ID.Player){
+        for (int i = 0; i < handler.object.size(); i++) {
+            if (handler.object.get(i).getId() == ID.Player) {
                 camera.tick(handler.object.get(i));
             }
         }
