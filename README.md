@@ -1,6 +1,6 @@
 <h1>Wizard Shooter</h1>
 
-<img src= 'https://i.postimg.cc/W1QHmBkR/Gameplay.gif'>
+<img src= 'https://media.giphy.com/media/VInAxWEW03b9uZEcjT/giphy.gif'>
 
 <h2>About</h2>
 <ul>
